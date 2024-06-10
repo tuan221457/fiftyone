@@ -56,7 +56,7 @@ const CodeHeader = styled.div`
   background: ${({ theme }) => theme.background.level2};
 `;
 
-const defaultSx: SxProps = { color: "inherit" };
+const defaultSx: SxProps = { color: "inherit", marginBottom: "1rem" };
 
 const componentsMap = {
   a({ children, ...props }) {
@@ -126,35 +126,35 @@ const componentsMap = {
     );
   },
   p: ({ children, ...props }) => (
-    <Typography sx={defaultSx}>{children}</Typography>
+    <Typography sx={{ ...defaultSx }}>{children}</Typography>
   ),
   h1: ({ children, ...props }) => (
-    <Typography sx={defaultSx} variant="h1" {...props}>
+    <Typography sx={{ ...defaultSx }} variant="h1" {...props}>
       {children}
     </Typography>
   ),
   h2: ({ children, ...props }) => (
-    <Typography sx={defaultSx} variant="h2" {...props}>
+    <Typography sx={{ ...defaultSx }} variant="h2" {...props}>
       {children}
     </Typography>
   ),
   h3: ({ children, ...props }) => (
-    <Typography sx={defaultSx} variant="h3" {...props}>
+    <Typography sx={{ ...defaultSx }} variant="h3" {...props}>
       {children}
     </Typography>
   ),
   h4: ({ children, ...props }) => (
-    <Typography sx={defaultSx} variant="h4" {...props}>
+    <Typography sx={{ ...defaultSx }} variant="h4" {...props}>
       {children}
     </Typography>
   ),
   h5: ({ children, ...props }) => (
-    <Typography sx={defaultSx} variant="h5" {...props}>
+    <Typography sx={{ ...defaultSx }} variant="h5" {...props}>
       {children}
     </Typography>
   ),
   h6: ({ children, ...props }) => (
-    <Typography sx={defaultSx} variant="h6" {...props}>
+    <Typography sx={{ ...defaultSx }} variant="h6" {...props}>
       {children}
     </Typography>
   ),
