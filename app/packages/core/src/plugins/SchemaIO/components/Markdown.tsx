@@ -60,6 +60,7 @@ const defaultSx: SxProps = { color: "inherit", marginBottom: "1rem" };
 
 const componentsMap = {
   a({ children, ...props }) {
+    const theme = useTheme();
     if (
       props.href &&
       props.href.startsWith("http") &&
@@ -72,7 +73,7 @@ const componentsMap = {
     }
 
     return (
-      <Link sx={defaultSx} {...props}>
+      <Link style={{ color: theme.primary.main }} {...props}>
         {children}
       </Link>
     );
