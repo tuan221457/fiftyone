@@ -7798,6 +7798,7 @@ class ToClips(ViewStage):
                 clips_dataset.name = name
 
             state["name"] = clips_dataset.name
+            self._field_or_expr = state["field_or_expr"]
             self._state = state
         else:
             clips_dataset = fod.load_dataset(name)
