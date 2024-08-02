@@ -55,9 +55,9 @@ import {
 import { isFieldVisibilityActive as isFieldVisibilityActiveState } from "./schemaSettings.atoms";
 import {
   datasetName,
+  disableFrameFiltering,
   isVideoDataset,
   stateSubscription,
-  disableFrameFiltering,
 } from "./selectors";
 import { State } from "./types";
 import {
@@ -629,7 +629,7 @@ export const sidebarEntries = selectorFamily<
 /**
  * Returns a set of paths that have their checkbox disabled in the sidebar
  */
-export const disabledCheckboxPaths = selector<Set<string>>({
+export const disabledCheckboxPaths = selector({
   key: "disabledCheckboxPaths",
   get: ({ get }) => {
     return new Set(get(fullyDisabledPaths));
@@ -639,18 +639,20 @@ export const disabledCheckboxPaths = selector<Set<string>>({
 /**
  * Returns a set of paths that have their filter dropdown disabled in the sidebar
  */
-export const disabledFilterPaths = selector<Set<string>>({
+export const disabledFilterPaths = selector({
   key: "disabledFilterPaths",
   get: ({ get }) => {
-    const paths = get(fullyDisabledPaths);
-    const disableFrames = Boolean(get(disableFrameFiltering));
+    const disableFrameFilters = get(disableFrameFiltering);
     const frameFields = get(atoms.frameFields);
-    if (disableFrames) {
-      frameFields.forEach((frame) => {
+    const paths = new Set(get(fullyDisabledPaths));
+
+    if (disableFrameFilters) {
+      for (const frame of frameFields) {
         paths.add(`frames.${frame.path}`);
-      });
+      }
     }
-    return new Set(paths);
+
+    return paths;
   },
 });
 
@@ -658,7 +660,7 @@ export const disabledFilterPaths = selector<Set<string>>({
  * Returns a set of paths that should have both their checkbox and filter
  * dropdown disabled in the sidebar
  */
-export const fullyDisabledPaths = selector<Set<string>>({
+export const fullyDisabledPaths = selector({
   key: "fullyDisabledPaths",
   get: ({ get }) => {
     const sampleFields = get(atoms.sampleFields);
@@ -708,27 +710,28 @@ export const fullyDisabledPaths = selector<Set<string>>({
         `frames.${parent.name}.`
       ).forEach((path) => paths.add(path));
     });
-    return new Set(paths);
+
+    return Array.from(paths);
   },
 });
 
-export const isDisabledCheckboxPath = selectorFamily<boolean, string>({
+export const isDisabledCheckboxPath = selectorFamily({
   key: "isDisabledCheckboxPath",
   get:
-    (path) =>
+    (path: string) =>
     ({ get }) =>
       get(disabledCheckboxPaths).has(path),
 });
 
-export const isDisabledFilterPath = selectorFamily<boolean, string>({
+export const isDisabledFilterPath = selectorFamily({
   key: "isDisabledFilterPath",
   get:
-    (path) =>
+    (path: string) =>
     ({ get }) =>
       get(disabledFilterPaths).has(path),
 });
 
-const collapsedPaths = selector<Set<string>>({
+const collapsedPaths = selector({
   key: "collapsedPaths",
   get: ({ get }) => {
     let paths = [...get(fieldPaths({ ftype: DICT_FIELD }))];
