@@ -22,6 +22,7 @@ class PanelConfig(OperatorConfig):
         self,
         name,
         label,
+        help_markdown=None,
         icon=None,
         dark_icon=None,
         light_icon=None,
@@ -32,6 +33,7 @@ class PanelConfig(OperatorConfig):
         super().__init__(name)
         self.name = name
         self.label = label
+        self.help_markdown = help_markdown
         self.icon = icon
         self.dark_icon = dark_icon
         self.light_icon = light_icon
@@ -47,6 +49,7 @@ class PanelConfig(OperatorConfig):
             **d,
             "name": self.name,
             "label": self.label,
+            "help_markdown": self.help_markdown,
             "icon": self.icon,
             "dark_icon": self.dark_icon,
             "light_icon": self.light_icon,
@@ -78,6 +81,7 @@ class Panel(Operator):
             "name": self.config.name,
             "label": self.config.label,
             "allow_duplicates": self.config.allow_multiple,
+            "help_markdown": self.config.help_markdown,
             "icon": self.config.icon,
             "dark_icon": self.config.dark_icon,
             "light_icon": self.config.light_icon,

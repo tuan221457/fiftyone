@@ -296,6 +296,7 @@ class Operations(object):
         self,
         name,
         label,
+        help_markdown=None,
         icon=None,
         dark_icon=None,
         light_icon=None,
@@ -316,6 +317,7 @@ class Operations(object):
 
         Args:
             name: the name of the panel to register
+            help_markdown (None): help text associated with the panel in markdown format
             icon (None): the icon to display in the panel tab
             dark_icon (None): the icon to display in the panel tab in dark mode of app
             light_icon (None): the icon to display in the panel tab in light mode of app
@@ -329,6 +331,7 @@ class Operations(object):
         params = {
             "panel_name": name,
             "panel_label": label,
+            "help_markdown": help_markdown,
             "icon": icon,
             "dark_icon": dark_icon,
             "light_icon": light_icon,
