@@ -6,10 +6,13 @@ FiftyOne operators.
 |
 """
 
+from typing_extensions import Literal
 import fiftyone.operators.types as types
 from fiftyone.operators.operator import OperatorConfig, Operator
 
 import pydash
+
+PANEL_SURFACE = Literal["grid", "modal", "grid modal"]
 
 
 class PanelConfig(OperatorConfig):
@@ -23,6 +26,7 @@ class PanelConfig(OperatorConfig):
         dark_icon=None,
         light_icon=None,
         allow_multiple=False,
+        surfaces: PANEL_SURFACE = "grid",
         **kwargs
     ):
         super().__init__(name)
@@ -34,6 +38,7 @@ class PanelConfig(OperatorConfig):
         self.allow_multiple = allow_multiple
         self.unlisted = True
         self.on_startup = True
+        self.surfaces = surfaces
         self.kwargs = kwargs  # unused, placeholder for future extensibility
 
     def to_json(self):
@@ -46,6 +51,7 @@ class PanelConfig(OperatorConfig):
             "dark_icon": self.dark_icon,
             "light_icon": self.light_icon,
             "allow_multiple": self.allow_multiple,
+            "surfaces": self.surfaces,
         }
 
 
@@ -75,6 +81,7 @@ class Panel(Operator):
             "icon": self.config.icon,
             "dark_icon": self.config.dark_icon,
             "light_icon": self.config.light_icon,
+            "surfaces": self.config.surfaces,
         }
         methods = ["on_load", "on_unload", "on_change"]
         ctx_change_events = [
